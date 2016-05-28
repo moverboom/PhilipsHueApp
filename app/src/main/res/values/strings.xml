@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PhilipsHue</string>
+    <string name="colorpicker_activity">Colorpicker</string>
+    <string name="groupsettings_activity">Settings</string>
+</resources>
