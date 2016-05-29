@@ -43,7 +43,6 @@ public class GroupsFragment extends ListFragment implements AdapterView.OnItemCl
         hueController.getGroups(groupArrayList);
 
         setListAdapter(groupAdapter);
-        groupAdapter.notifyDataSetChanged();
 
         getListView().setOnItemClickListener(this);
     }

@@ -25,7 +25,7 @@ import java.util.Map;
  * Created by matthijs on 28-5-16.
  */
 public class HueController {
-    private static final String BASE_URL = "http://192.168.178.16:8000/api/";
+    private static final String BASE_URL = "http://192.168.178.24:8000/api/";
     private static final String USERNAME = "newdeveloper";
     private static final String GROUPS = "/groups/";
     private static final String LIGHTS = "/lights/";
@@ -40,6 +40,15 @@ public class HueController {
     public void getGroups(ArrayList<Group> list) {
         groupList = list;
         new GetGroups().execute();
+    }
+
+    public Group getGroupFromArray(int id) {
+        for(Group group : groupList) {
+            if(group.getId() == id) {
+                return group;
+            }
+        }
+        return new Group();
     }
 
     public void controlGroup(Group group, State newState) {
@@ -67,30 +76,47 @@ public class HueController {
             Log.d("PhilipsHue", "Result: " + string);
             try {
                 //Create JSONObject from response
-                JSONObject jsonResult = new JSONObject(string);
-                //Get key iterator
-                Iterator it = jsonResult.keys();
-                while(it.hasNext()) {
-                    //Get next key -> group id
-                    String key = (String)it.next();
-                    //get group json object
-                    JSONObject jsonGroup = jsonResult.getJSONObject(key);
-                    Group group = new Group();
-                    group.setName(jsonGroup.getString("name"));
-
-                    State state = new State();
-                    state.on = jsonGroup.getJSONObject("action").getBoolean("on");
-                    state.x = (double)jsonGroup.getJSONObject("action").getJSONArray("xy").get(0);
-                    state.y = (double)jsonGroup.getJSONObject("action").getJSONArray("xy").get(1);
-                    group.setState(state);
-
-                    groupList.add(group);
-                    Log.d("PhilipsHue", jsonGroup.getString("name"));
-                }
+                Group group = buildGroupFromJson(new JSONObject(string));
+                groupList.add(group);
+                adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            adapter.notifyDataSetChanged();
+        }
+
+        private Group buildGroupFromJson(JSONObject jsonObject) {
+            Group group = new Group();
+            try {
+                //Get key iterator
+                Iterator it = jsonObject.keys();
+                while (it.hasNext()) {
+                    //Get next key -> group id
+                    String key = (String) it.next();
+                    //get group json object
+                    JSONObject jsonGroup = jsonObject.getJSONObject(key);
+                    group.setId(Integer.parseInt((String)jsonObject.names().get(0)));
+                    group.setName(jsonGroup.getString("name"));
+                    group.setState(buildStateFromJson(jsonGroup.getJSONObject("action")));
+                }
+            } catch (Exception e) {
+                Log.d("PhlilipsHue", e.getMessage());
+                e.printStackTrace();
+            }
+            return group;
+        }
+
+        private State buildStateFromJson(JSONObject jsonObject) {
+            State state = new State();
+            try {
+                state.on = jsonObject.getBoolean("on");
+                state.effect = jsonObject.getString("effect");
+                state.x = (double) jsonObject.getJSONArray("xy").get(0);
+                state.y = (double) jsonObject.getJSONArray("xy").get(1);
+            } catch (Exception e) {
+                Log.d("PhilipsHue", e.getMessage());
+                e.printStackTrace();
+            }
+            return state;
         }
     }
 
@@ -106,7 +132,6 @@ public class HueController {
             String result = null;
             try {
                 URL url = new URL(BASE_URL + USERNAME + GROUPS + args[0] + "/action");
-
                 result = PutRequest.executePutRequest(url, createJson());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -118,7 +143,7 @@ public class HueController {
             JSONObject json = new JSONObject();
             try {
                 json.put("on", newState.on);
-
+                json.put("effect", newState.effect);
                 JSONArray xyArray = new JSONArray();
                 xyArray.put(newState.x);
                 xyArray.put(newState.y);

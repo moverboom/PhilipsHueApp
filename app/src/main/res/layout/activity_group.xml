@@ -34,7 +34,7 @@
         <Switch
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="State"
+            android:text="On/Off"
             android:id="@+id/groupState_act"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
@@ -63,6 +63,18 @@
             android:layout_below="@+id/groupState_act"
             android:layout_alignRight="@+id/groupState_act"
             android:layout_alignEnd="@+id/groupState_act" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Color Loop"
+            android:id="@+id/colorLoopSwitch"
+            android:textSize="20dp"
+            android:layout_below="@+id/textView2"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_alignRight="@+id/change_color_button"
+            android:layout_alignEnd="@+id/change_color_button" />
 
     </RelativeLayout>
 

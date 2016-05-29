@@ -18,7 +18,7 @@ import com.matthijs.philipshue.Model.State;
 /**
  * Created by matthijs on 28-5-16.
  */
-public class GroupSettingsActivity extends AppCompatActivity implements Button.OnClickListener, Switch.OnCheckedChangeListener {
+public class GroupSettingsActivity extends AppCompatActivity implements Button.OnClickListener {
     private Group group;
     private static final int PICK_COLOR = 111;
     private State newState = new State();
@@ -47,7 +47,11 @@ public class GroupSettingsActivity extends AppCompatActivity implements Button.O
 
         Switch onOffSwitch = (Switch)findViewById(R.id.groupState_act);
         onOffSwitch.setChecked(group.getState().on);
-        onOffSwitch.setOnCheckedChangeListener(this);
+        onOffSwitch.setOnCheckedChangeListener(new OnOfSwitchListener());
+
+        Switch colorLoopSwitch = (Switch)findViewById(R.id.colorLoopSwitch);
+        colorLoopSwitch.setChecked(group.getState().effect.equals("colorloop"));
+        colorLoopSwitch.setOnCheckedChangeListener(new ColorLoopListener());
     }
 
     @Override
@@ -68,9 +72,19 @@ public class GroupSettingsActivity extends AppCompatActivity implements Button.O
         }
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        newState.on = b;
-        hueController.controlGroup(group, newState);
+    private class OnOfSwitchListener implements Switch.OnCheckedChangeListener {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            newState.on = b;
+            hueController.controlGroup(group, newState);
+        }
+    }
+
+    private class ColorLoopListener implements Switch.OnCheckedChangeListener {
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            newState.effect = b ? "colorloop":"none";
+            hueController.controlGroup(group, newState);
+        }
     }
 }
