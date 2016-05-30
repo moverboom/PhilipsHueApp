@@ -28,7 +28,7 @@ public class HueController {
     /**
      * Base URL to the Bridge
      */
-    private static final String BASE_URL = "http://192.168.178.24:8000/api/";
+    private static final String BASE_URL = "http://192.168.178.19:8000/api/";
 
     /**
      * Username to get access to the Bridge
@@ -111,34 +111,25 @@ public class HueController {
         public void onPostExecute(String string) {
             Log.d("PhilipsHue", "Result: " + string);
             try {
-                //Create JSONObject from response
-                Group group = buildGroupFromJson(new JSONObject(string));
-                groupList.add(group);
+                //Create JSONObject from response\
+                Log.d("PhilipsHue", "Names: " + new JSONObject(string).names().toString());
+                buildGroupsFromJson(new JSONObject(string));
                 adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        private Group buildGroupFromJson(JSONObject jsonObject) {
-            Group group = new Group();
+        private void buildGroupsFromJson(JSONObject jsonObject) {
             try {
-                //Get key iterator
-                Iterator it = jsonObject.keys();
-                while (it.hasNext()) {
-                    //Get next key -> group id
-                    String key = (String) it.next();
-                    //get group json object
-                    JSONObject jsonGroup = jsonObject.getJSONObject(key);
-                    group.setId(Integer.parseInt((String)jsonObject.names().get(0)));
-                    group.setName(jsonGroup.getString("name"));
-                    group.setState(buildStateFromJson(jsonGroup.getJSONObject("action")));
+                Iterator<String> jsonIterator = jsonObject.keys();
+                while(jsonIterator.hasNext()) {
+                    Log.d("PhilipsHue", jsonIterator.next());
                 }
             } catch (Exception e) {
                 Log.d("PhlilipsHue", e.getMessage());
                 e.printStackTrace();
             }
-            return group;
         }
 
         private State buildStateFromJson(JSONObject jsonObject) {
