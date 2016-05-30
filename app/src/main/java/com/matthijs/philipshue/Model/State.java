@@ -3,7 +3,7 @@ package com.matthijs.philipshue.Model;
 import java.io.Serializable;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class State implements Serializable {
     public boolean on;
@@ -17,4 +17,8 @@ public class State implements Serializable {
     public String effect;
     public String colormode;
     public boolean reachable;
+
+    /*
+    NEEDS REFACTORING
+     */
 }

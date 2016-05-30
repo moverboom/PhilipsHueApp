@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import com.matthijs.philipshue.Adapters.CustomPagerAdapter;
 import com.matthijs.philipshue.HueController.HueController;
 
-
+/**
+ * Created by Matthijs Overboom on 28-5-16.
+ */
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;

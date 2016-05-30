@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class Group implements Serializable {
     /**

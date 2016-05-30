@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.BaseAdapter;
 
+import com.matthijs.philipshue.HueController.HueActions.ControlGroup;
+import com.matthijs.philipshue.HueController.HueActions.GetGroups;
 import com.matthijs.philipshue.HueController.HueActions.GetRequest;
 import com.matthijs.philipshue.HueController.HueActions.PutRequest;
 import com.matthijs.philipshue.Model.Group;
@@ -22,13 +24,15 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Handles all interaction with the Bridge
+ *
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class HueController {
     /**
      * Base URL to the Bridge
      */
-    private static final String BASE_URL = "http://192.168.178.19:8000/api/";
+    private static final String BASE_URL = "http://192.168.178.16:8000/api/";
 
     /**
      * Username to get access to the Bridge
@@ -44,11 +48,6 @@ public class HueController {
      * sub-URL to access lights
      */
     private static final String LIGHTS = "/lights/";
-
-    /**
-     * List which holds all groups
-     */
-    private ArrayList<Group> groupList = new ArrayList<>();
 
     /**
      * Reference to the adapter which holds model objects currently displayed
@@ -71,8 +70,7 @@ public class HueController {
      * @param list ArrayList<Group>
      */
     public void getGroups(ArrayList<Group> list) {
-        groupList = list;
-        new GetGroups().execute();
+        new GetGroups(list, adapter).execute(BASE_URL + USERNAME + GROUPS);
     }
 
     /**
@@ -82,104 +80,7 @@ public class HueController {
      * @param newState State to set
      */
     public void controlGroup(Group group, State newState) {
-        ControlGroup controlGroup = new ControlGroup(newState);
-        controlGroup.execute(group.getId());
-    }
-
-
-    /*
-    EVERYTHING BELOW THIS COMMENT NEEDS REFACTORING
-    Comments added later
-     */
-
-    private class GetGroups extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... args) {
-            String result = null;
-            try {
-                URL url = new URL(BASE_URL + USERNAME + GROUPS);
-                result = GetRequest.executeGetRequest(url);
-                Log.d("PhilipsHue", result);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        public void onPostExecute(String string) {
-            Log.d("PhilipsHue", "Result: " + string);
-            try {
-                //Create JSONObject from response\
-                Log.d("PhilipsHue", "Names: " + new JSONObject(string).names().toString());
-                buildGroupsFromJson(new JSONObject(string));
-                adapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void buildGroupsFromJson(JSONObject jsonObject) {
-            try {
-                Iterator<String> jsonIterator = jsonObject.keys();
-                while(jsonIterator.hasNext()) {
-                    Log.d("PhilipsHue", jsonIterator.next());
-                }
-            } catch (Exception e) {
-                Log.d("PhlilipsHue", e.getMessage());
-                e.printStackTrace();
-            }
-        }
-
-        private State buildStateFromJson(JSONObject jsonObject) {
-            State state = new State();
-            try {
-                state.on = jsonObject.getBoolean("on");
-                state.effect = jsonObject.getString("effect");
-                state.x = (double) jsonObject.getJSONArray("xy").get(0);
-                state.y = (double) jsonObject.getJSONArray("xy").get(1);
-            } catch (Exception e) {
-                Log.d("PhilipsHue", e.getMessage());
-                e.printStackTrace();
-            }
-            return state;
-        }
-    }
-
-    private class ControlGroup extends AsyncTask<Integer, Void, String> {
-        private State newState;
-
-        public ControlGroup(State newState) {
-            this.newState = newState;
-        }
-
-        @Override
-        public String doInBackground(Integer... args) {
-            String result = null;
-            try {
-                URL url = new URL(BASE_URL + USERNAME + GROUPS + args[0] + "/action");
-                result = PutRequest.executePutRequest(url, createJson());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        private JSONObject createJson() {
-            JSONObject json = new JSONObject();
-            try {
-                json.put("on", newState.on);
-                json.put("effect", newState.effect);
-                JSONArray xyArray = new JSONArray();
-                xyArray.put(newState.x);
-                xyArray.put(newState.y);
-                json.put("xy", xyArray);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return json;
-        }
+        ControlGroup controlGroup = new ControlGroup(group, newState);
+        controlGroup.execute(BASE_URL + USERNAME + GROUPS + group.getId() + "/action");
     }
 }

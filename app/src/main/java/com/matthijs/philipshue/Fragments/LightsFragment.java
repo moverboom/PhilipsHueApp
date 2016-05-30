@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.matthijs.philipshue.R;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class LightsFragment extends Fragment {
     @Override

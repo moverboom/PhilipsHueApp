@@ -1,7 +1,7 @@
 package com.matthijs.philipshue.Model;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class Light {
     private int id;

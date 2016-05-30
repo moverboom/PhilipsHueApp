@@ -19,7 +19,7 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class GroupsFragment extends ListFragment implements AdapterView.OnItemClickListener {
     GroupAdapter groupAdapter;

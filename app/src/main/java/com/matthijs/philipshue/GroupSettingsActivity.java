@@ -16,7 +16,7 @@ import com.matthijs.philipshue.Model.Group;
 import com.matthijs.philipshue.Model.State;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class GroupSettingsActivity extends AppCompatActivity implements Button.OnClickListener {
     private Group group;
@@ -38,7 +38,6 @@ public class GroupSettingsActivity extends AppCompatActivity implements Button.O
         }
 
         group = (Group)getIntent().getSerializableExtra("GROUP");
-        newState = group.getState();
         TextView label = (TextView)findViewById(R.id.groupNameAct);
         label.setText(group.getName());
 

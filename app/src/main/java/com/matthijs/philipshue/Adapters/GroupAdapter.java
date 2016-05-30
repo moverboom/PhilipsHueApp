@@ -13,7 +13,7 @@ import com.matthijs.philipshue.R;
 import java.util.ArrayList;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class GroupAdapter extends BaseAdapter {
     private Context context;
@@ -57,7 +57,7 @@ public class GroupAdapter extends BaseAdapter {
 
         Group group = groupArrayList.get(i);
         groupViewHolder.name.setText(group.getName());
-
+        view.findViewById(R.id.loading_icon).setVisibility(View.GONE);
         return view;
     }
 

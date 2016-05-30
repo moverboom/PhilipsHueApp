@@ -8,7 +8,7 @@ import com.matthijs.philipshue.Fragments.GroupsFragment;
 import com.matthijs.philipshue.Fragments.LightsFragment;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class CustomPagerAdapter extends FragmentPagerAdapter {
     private int amountTabs = 2;

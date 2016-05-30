@@ -21,7 +21,7 @@ import com.matthijs.philipshue.ColorPicker.SVBar;
 import java.util.List;
 
 /**
- * Created by matthijs on 28-5-16.
+ * Created by Matthijs Overboom on 28-5-16.
  */
 public class ColorPickerActivity extends AppCompatActivity implements ColorPicker.OnColorChangedListener {
     private ColorPicker picker;
@@ -86,6 +86,11 @@ public class ColorPickerActivity extends AppCompatActivity implements ColorPicke
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Converts the returned color as int from the colorwheel to xy values as doubles
+     * @param color color as int
+     * @return double[]
+     */
     private double[] convertToXY(int color) {
         double[] result = new double[2];
         double[] xyzValues = new double[3];
