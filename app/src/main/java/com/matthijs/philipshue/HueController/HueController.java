@@ -25,36 +25,72 @@ import java.util.Map;
  * Created by matthijs on 28-5-16.
  */
 public class HueController {
+    /**
+     * Base URL to the Bridge
+     */
     private static final String BASE_URL = "http://192.168.178.24:8000/api/";
+
+    /**
+     * Username to get access to the Bridge
+     */
     private static final String USERNAME = "newdeveloper";
+
+    /**
+     * sub-URL to access groups
+     */
     private static final String GROUPS = "/groups/";
+
+    /**
+     * sub-URL to access lights
+     */
     private static final String LIGHTS = "/lights/";
+
+    /**
+     * List which holds all groups
+     */
     private ArrayList<Group> groupList = new ArrayList<>();
+
+    /**
+     * Reference to the adapter which holds model objects currently displayed
+     * This adapter is notified when the model is updated
+     */
     private BaseAdapter adapter;
 
-
+    /**
+     * Sets the adapter reference
+     *
+     * @param adapter BaseAdapter
+     */
     public void setAdapter(BaseAdapter adapter) {
         this.adapter = adapter;
     }
 
+    /**
+     * Fills the provided list with all Groups registered on the Bridge
+     *
+     * @param list ArrayList<Group>
+     */
     public void getGroups(ArrayList<Group> list) {
         groupList = list;
         new GetGroups().execute();
     }
 
-    public Group getGroupFromArray(int id) {
-        for(Group group : groupList) {
-            if(group.getId() == id) {
-                return group;
-            }
-        }
-        return new Group();
-    }
-
+    /**
+     * Sets the new state for the group which was defined by the user
+     *
+     * @param group Group to update
+     * @param newState State to set
+     */
     public void controlGroup(Group group, State newState) {
         ControlGroup controlGroup = new ControlGroup(newState);
         controlGroup.execute(group.getId());
     }
+
+
+    /*
+    EVERYTHING BELOW THIS COMMENT NEEDS REFACTORING
+    Comments added later
+     */
 
     private class GetGroups extends AsyncTask<Void, Void, String> {
 
