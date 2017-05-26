@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.BaseAdapter;
 
-import com.matthijs.philipshue.Model.Group;
+import com.matthijs.philipshue.Model.Light;
 import com.matthijs.philipshue.Model.State;
 
 import org.json.JSONException;
@@ -15,33 +15,30 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by Matthijs Overboom on 31-5-16.
+ * Created by Matthijs Overboom on 25-5-17.
  */
-public class GetGroups extends AsyncTask<String, Void, String> {
+
+public class GetLights extends AsyncTask<String, Void, String> {
     /**
-     * ArrayList which holds all Groups
+     * ArrayList which holds all Lights
      */
-    private ArrayList<Group> groupArrayList;
+    private ArrayList<Light> lightArrayList;
 
     /**
-     * Reference to the adapter displaying the Groups to notify
+     * Reference to the adapter displaying the Lights to notify
      */
     private BaseAdapter adapter;
 
     /**
      * Constructor
      *
-     * @param groupArrayList ArrayList
-     * @param adapter BaseAdapter
+     * @param lightArrayList ArrayList
+     * @param adapter        BaseAdapter
      */
-    public GetGroups(ArrayList<Group> groupArrayList, BaseAdapter adapter) {
-        this.groupArrayList = groupArrayList;
+    public GetLights(ArrayList<Light> lightArrayList, BaseAdapter adapter) {
+        this.lightArrayList = lightArrayList;
         this.adapter = adapter;
     }
-
-    /*
-    NEEDS REFACTORING
-     */
 
     @Override
     protected String doInBackground(String... args) {
@@ -58,7 +55,7 @@ public class GetGroups extends AsyncTask<String, Void, String> {
     @Override
     public void onPostExecute(String string) {
         try {
-            buildGroupsFromJson(new JSONObject(string));
+            buildLightsFromJson(new JSONObject(string));
             adapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -66,19 +63,19 @@ public class GetGroups extends AsyncTask<String, Void, String> {
     }
 
     /**
-     * Parses supplied JSONObject and extract all Groups and their States from it
+     * Parses supplied JSONObject and extract all Lights and their States from it
      *
-     * @param jsonObject JSONObject containing Groups
+     * @param jsonObject JSONObject containing Lights
      */
-    private void buildGroupsFromJson(JSONObject jsonObject) {
+    private void buildLightsFromJson(JSONObject jsonObject) {
         try {
-            for(int i = 0; i < jsonObject.names().length(); i++) {
-                JSONObject groupJson = jsonObject.getJSONObject((String)jsonObject.names().get(i));
-                Group group = new Group();
-                group.setId(jsonObject.names().getInt(i));
-                group.setName(groupJson.getString("name"));
-                group.setState(buildStateFromJson(groupJson.getJSONObject("action")));
-                groupArrayList.add(group);
+            for (int i = 0; i < jsonObject.names().length(); i++) {
+                JSONObject lightAsJson = jsonObject.getJSONObject((String) jsonObject.names().get(i));
+                Light light = new Light();
+                light.setId(jsonObject.names().getInt(i));
+                light.setName(lightAsJson.getString("name"));
+                light.setState(buildStateFromJson(lightAsJson.getJSONObject("state")));
+                lightArrayList.add(light);
             }
         } catch (Exception e) {
             Log.d("PhilipsHue", e.getMessage());
@@ -87,7 +84,7 @@ public class GetGroups extends AsyncTask<String, Void, String> {
     }
 
     /**
-     * Builds a Group's State using the given JSONObject
+     * Builds a Light's State using the given JSONObject
      *
      * @param jsonObject JSONObject holding the State
      * @return State

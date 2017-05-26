@@ -13,9 +13,9 @@ public class State implements Serializable {
     public double x; //Colorspace as a list of 2 floats with 3 decimals
     public double y; //Colorspace as a list of 2 floats with 3 decimals
     public int ct;
-    public String alert;
-    public String effect;
-    public String colormode;
+    public String alert = "";
+    public String effect = "";
+    public String colormode = "";
     public boolean reachable;
 
     /*

@@ -29,7 +29,7 @@ public class GroupsFragment extends ListFragment implements AdapterView.OnItemCl
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        hueController = new HueController();
+        hueController = HueController.create(getContext());
         this.layoutInflater = inflater;
         return inflater.inflate(R.layout.fragment_groups, container, false);
     }
@@ -38,7 +38,7 @@ public class GroupsFragment extends ListFragment implements AdapterView.OnItemCl
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        groupAdapter = new GroupAdapter(getContext(), layoutInflater, groupArrayList);
+        groupAdapter = new GroupAdapter(layoutInflater, groupArrayList);
         hueController.setAdapter(groupAdapter);
         hueController.getGroups(groupArrayList);
 
@@ -51,7 +51,9 @@ public class GroupsFragment extends ListFragment implements AdapterView.OnItemCl
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Log.d("PhilipsHue", "Group clicked: " + i);
         Intent groupSettingsIntent = new Intent(getContext(), GroupSettingsActivity.class);
-        groupSettingsIntent.putExtra("GROUP", groupArrayList.get(i));
+        Group group = groupArrayList.get(i);
+        groupSettingsIntent.putExtra("GROUP", group);
+        groupSettingsIntent.putExtra("GROUPSTATE", group.getState());
         startActivity(groupSettingsIntent);
     }
 }

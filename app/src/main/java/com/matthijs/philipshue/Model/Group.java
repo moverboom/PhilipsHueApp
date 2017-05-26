@@ -10,39 +10,19 @@ public class Group implements Serializable {
     /**
      * Group id as defined by Bridge
      */
-    private int id;
+    protected int id;
 
     /**
      * Group name
      */
-    private String name;
+    protected String name;
 
     /**
      * Group state as State.
      * This holds all settings like hue, bri, effect etc.
      */
-    private State state;
+    protected State state;
 
-    /**
-     * HashMap which contains all Lights in the Group
-     */
-    private HashMap<Integer, Light> lightHashMap;
-
-    /**
-     * Constructor
-     */
-    public Group() {
-        lightHashMap = new HashMap<Integer, Light>();
-    }
-
-    /**
-     * Returns Light for given id
-     * Doesn't do anything yet
-     * @return
-     */
-    public Light getLight() {
-        return null;
-    }
 
     /**
      * Returns the Group's id
@@ -91,5 +71,4 @@ public class Group implements Serializable {
     public void setState(State state) {
         this.state = state;
     }
-
 }

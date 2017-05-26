@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference android:title="Bridge IP"
+        android:key="bridge_url"
+        android:summary="Example: 192.168.178.2 (append :PORT for port)">
+        </EditTextPreference>
+
+    <EditTextPreference android:title="Bridge username"
+        android:key="bridge_username"
+        android:summary="Example: newdeveloper">
+    </EditTextPreference>
+
+    <!--<ListPreference     android:title="Download Details"-->
+        <!--android:summary="Select the kind of data that you would like to download"-->
+        <!--android:key="downloadType"-->
+        <!--android:defaultValue="1"-->
+        <!--android:entries="@array/listArray"-->
+        <!--android:entryValues="@array/listValues" />-->
+</PreferenceScreen>

@@ -30,10 +30,34 @@
                 android:value=".MainActivity" />
         </activity>
 
+        <!-- Light Settings -->
+        <activity
+            android:name=".LightSettingsActivity"
+            android:label="@string/lightsettings_activity"
+            android:parentActivityName=".MainActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
         <!-- Color Picker -->
         <activity
             android:name=".ColorPickerActivity"
             android:label="@string/colorpicker_activity" >
+        </activity>
+
+        <!-- Preferences Activity -->
+        <activity
+            android:name=".AppPreferencesActivity"
+            android:label="@string/preferences_activity"
+            android:parentActivityName=".MainActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
 
         <meta-data

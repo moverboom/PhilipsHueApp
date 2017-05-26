@@ -23,12 +23,11 @@ public class PutRequest {
             conn.setRequestProperty("Content-Type", "application/json");
             conn.connect();
 
-            // Schrijf de JSON data in de request body.
+            // Write JSON data to request body
             DataOutputStream d = new DataOutputStream(conn.getOutputStream());
             d.writeBytes(data.toString());
-            Log.d("PhilipsHue", data.toString());
 
-            // Lees het resultaat dat de Bridge retourneert.
+            // Read result from Bridge
             BufferedReader b = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             result = b.readLine();
             conn.disconnect();

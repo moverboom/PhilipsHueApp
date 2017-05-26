@@ -42,6 +42,13 @@ public class ColorPickerActivity extends AppCompatActivity implements ColorPicke
         }
 
         picker = (ColorPicker) findViewById(R.id.picker);
+        double colorX = getIntent().getDoubleExtra("COLOR_X", 0);
+        double colorY = getIntent().getDoubleExtra("COLOR_Y", 0);
+        double colorZ = (colorY / colorX) * (1 - colorX - colorY);
+        int color = ColorUtils.XYZToColor(colorX, colorY, colorZ);
+        Log.d("COLOR", Integer.toString(color));
+        picker.setColor(color);
+
         //svBar = (SVBar) findViewById(R.id.svbar);
         //opacityBar = (OpacityBar) findViewById(R.id.opacitybar);
         button = (Button) findViewById(R.id.button1);
@@ -52,14 +59,12 @@ public class ColorPickerActivity extends AppCompatActivity implements ColorPicke
         picker.setOnColorChangedListener(this);
 
         button.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                //text.setTextColor(picker.getColor());
                 picker.setOldCenterColor(picker.getColor());
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("COLOR_X", new Double(String.format("%.3f", convertToXY(picker.getColor())[0])));
-                resultIntent.putExtra("COLOR_Y", new Double(String.format("%.3f", convertToXY(picker.getColor())[1])));
+                resultIntent.putExtra("COLOR_X", new Double(String.format("%.4f", convertToXY(picker.getColor())[0])));
+                resultIntent.putExtra("COLOR_Y", new Double(String.format("%.4f", convertToXY(picker.getColor())[1])));
                 setResult(RESULT_OK, resultIntent);
                 finish();
             }

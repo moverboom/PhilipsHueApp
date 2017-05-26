@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Name"
+        android:id="@+id/lightNameAct"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:layout_margin="@dimen/activity_vertical_margin">
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="On/Off"
+            android:id="@+id/lightState_act"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:checked="false"
+            android:layout_margin="10dp"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Color"
+            android:id="@+id/textView2"
+            android:layout_alignLeft="@+id/lightState_act"
+            android:layout_alignStart="@+id/lightState_act"
+            android:layout_alignTop="@+id/change_color_button"
+            android:layout_alignBottom="@+id/change_color_button"
+            android:gravity="center_vertical" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change"
+            android:id="@+id/change_color_button"
+            android:layout_below="@+id/lightState_act"
+            android:layout_alignRight="@+id/lightState_act"
+            android:layout_alignEnd="@+id/lightState_act" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Color Loop"
+            android:id="@+id/colorLoopSwitch"
+            android:textSize="20dp"
+            android:layout_below="@+id/textView2"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_alignRight="@+id/change_color_button"
+            android:layout_alignEnd="@+id/change_color_button" />
+
+    </RelativeLayout>
+
+</LinearLayout>

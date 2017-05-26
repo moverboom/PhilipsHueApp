@@ -1,32 +1,33 @@
 package com.matthijs.philipshue.HueController.HueActions;
 
 import android.os.AsyncTask;
-import com.matthijs.philipshue.Model.Group;
-import com.matthijs.philipshue.Model.State;
+
+import com.matthijs.philipshue.Model.Light;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Sends the Group status to the Bridge
- *
- * Created by Matthijs Overboom on 31-5-16.
+ * Created by Matthijs Overboom on 25-5-17.
  */
-public class ControlGroup extends AsyncTask<String, Void, String> {
+
+public class ControlLight extends AsyncTask<String, Void, String> {
     /**
-     * Group to set
+     * Light to set
      */
-    private Group group;
+    private Light light;
 
     /**
      * Constructor
      *
-     * @param group Group to set
+     * @param light Light to set
      */
-    public ControlGroup(Group group) {
-        this.group = group;
+    public ControlLight(Light light) {
+        this.light = light;
     }
 
     @Override
@@ -59,8 +60,8 @@ public class ControlGroup extends AsyncTask<String, Void, String> {
     }
 
     /**
-     * Sets Group's on attribute
-     * Needs implementation of a check wheter if it is needed.
+     * Sets Light's on attribute
+     * Needs implementation of a check whether it is needed.
      * The PhilipsHue API specifies that the on attributes must only be
      * provided when needed.
      *
@@ -68,30 +69,30 @@ public class ControlGroup extends AsyncTask<String, Void, String> {
      * @throws JSONException
      */
     private void setOnOffIfNeeded(JSONObject jsonObject) throws JSONException {
-        jsonObject.put("on", group.getState().on);
+        jsonObject.put("on", light.getState().on);
     }
 
     /**
-     * Sets the Group's color using XY values
+     * Sets the Light's color using XY values
      *
      * @param jsonObject JSONObject to set
      * @throws JSONException
      */
     private void setXY(JSONObject jsonObject) throws JSONException {
         JSONArray xyArray = new JSONArray();
-        xyArray.put(group.getState().x);
-        xyArray.put(group.getState().y);
+        xyArray.put(light.getState().x);
+        xyArray.put(light.getState().y);
         jsonObject.put("xy", xyArray);
     }
 
     /**
-     * Sets the Group's effect.
+     * Sets the Light's effect.
      * Can only be colorloop as defined in the PhilipsHue API
      *
      * @param jsonObject JSONObject to set
      * @throws JSONException
      */
     private void setEffect(JSONObject jsonObject) throws JSONException {
-        jsonObject.put("effect", group.getState().effect);
+        jsonObject.put("effect", light.getState().effect);
     }
 }

@@ -16,12 +16,10 @@ import java.util.ArrayList;
  * Created by Matthijs Overboom on 28-5-16.
  */
 public class GroupAdapter extends BaseAdapter {
-    private Context context;
     private LayoutInflater layoutInflater;
     private ArrayList<Group> groupArrayList;
 
-    public GroupAdapter(Context context, LayoutInflater layoutInflater, ArrayList<Group> groupArrayList) {
-        this.context = context;
+    public GroupAdapter(LayoutInflater layoutInflater, ArrayList<Group> groupArrayList) {
         this.layoutInflater = layoutInflater;
         this.groupArrayList = groupArrayList;
     }
