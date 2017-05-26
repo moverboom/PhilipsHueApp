@@ -63,8 +63,6 @@ public class GroupSettingsActivity extends AppCompatActivity implements Button.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PICK_COLOR && resultCode == RESULT_OK) {
-            Log.d("PhilipHue", "Picked ColorX: " + data.getDoubleExtra("COLOR_X", 0.0));
-            Log.d("PhilipHue", "Picked ColorY: " + data.getDoubleExtra("COLOR_Y", 0.0));
             group.getState().x = data.getDoubleExtra("COLOR_X", 0.0);
             group.getState().y = data.getDoubleExtra("COLOR_Y", 0.0);
             hueController.controlGroup(group);

@@ -69,8 +69,6 @@ public class LightSettingsActivity extends AppCompatActivity implements Button.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PICK_COLOR && resultCode == RESULT_OK) {
-            Log.d("PhilipHue", "Picked ColorX: " + data.getDoubleExtra("COLOR_X", 0.0));
-            Log.d("PhilipHue", "Picked ColorY: " + data.getDoubleExtra("COLOR_Y", 0.0));
             light.getState().x = data.getDoubleExtra("COLOR_X", 0.0);
             light.getState().y = data.getDoubleExtra("COLOR_Y", 0.0);
             hueController.controlLight(light);

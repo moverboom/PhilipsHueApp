@@ -52,7 +52,6 @@ public class LightsFragment extends ListFragment implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.d("PhilipsHue", "Light clicked: " + i);
         Intent lightSettingsIntent = new Intent(getContext(), LightSettingsActivity.class);
         Light light = lightArrayList.get(i);
         lightSettingsIntent.putExtra("LIGHT", light);

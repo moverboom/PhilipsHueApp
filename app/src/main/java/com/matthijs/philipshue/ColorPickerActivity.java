@@ -46,7 +46,6 @@ public class ColorPickerActivity extends AppCompatActivity implements ColorPicke
         double colorY = getIntent().getDoubleExtra("COLOR_Y", 0);
         double colorZ = (colorY / colorX) * (1 - colorX - colorY);
         int color = ColorUtils.XYZToColor(colorX, colorY, colorZ);
-        Log.d("COLOR", Integer.toString(color));
         picker.setColor(color);
 
         //svBar = (SVBar) findViewById(R.id.svbar);

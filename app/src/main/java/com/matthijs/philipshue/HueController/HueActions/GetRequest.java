@@ -15,7 +15,6 @@ public class GetRequest {
     public static String executeGetRequest(URL url) {
         String result = "";
         try {
-            Log.d("URL", url.toString());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");

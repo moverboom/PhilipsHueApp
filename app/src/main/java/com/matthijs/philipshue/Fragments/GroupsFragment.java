@@ -49,7 +49,6 @@ public class GroupsFragment extends ListFragment implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.d("PhilipsHue", "Group clicked: " + i);
         Intent groupSettingsIntent = new Intent(getContext(), GroupSettingsActivity.class);
         Group group = groupArrayList.get(i);
         groupSettingsIntent.putExtra("GROUP", group);
