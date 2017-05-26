@@ -22,6 +22,8 @@ import java.util.List;
 
 /**
  * Created by Matthijs Overboom on 28-5-16.
+ *
+ * @link http://www.developers.meethue.com/documentation/core-concepts#color_gets_more_complicated
  */
 public class ColorPickerActivity extends AppCompatActivity implements ColorPicker.OnColorChangedListener {
     private ColorPicker picker;
